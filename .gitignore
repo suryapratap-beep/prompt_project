@@ -1,0 +1,18 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+
+# OS artifacts
+.DS_Store
+*/.DS_Store
+
+# Large datasets (>100MB exceeds GitHub push limits)
+data/amazon_products.csv
+data/flipkart_com-ecommerce_sample.csv
+
+# Local environment & secrets
+.env
+.env.*
+venv/
+.venv/
