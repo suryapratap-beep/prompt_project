@@ -35,15 +35,17 @@ flowchart TD
 
 ---
 
-## 📊 Benchmark Findings
+## 📊 Benchmark Findings & Milestone 2 Evaluation
 
-Running `python3 src/evaluate.py` across 5 representative test cases demonstrates the empirical impact of prompt grounding:
+Running `python3 src/evaluate.py` across the **12 benchmark test cases** (defined in `data/test_queries.json`, including 4 edge and boundary cases) demonstrates the empirical impact of prompt grounding:
 
 | Metric | Baseline Prompt (Zero-Shot) | ElectraMatch 4-Stage Pipeline | Delta |
 | :--- | :---: | :---: | :---: |
-| **Constraint Compliance Rate (CCR)** | **40.0%** | **100.0%** | **+60.0%** |
-| **Budget Overshoot Rate** | High (frequently suggests items ₹1k–₹3k over budget) | **0.0%** (deterministic bounds enforced) | **-100%** |
+| **Constraint Compliance Rate (CCR)** | **66.7%** (8/12) | **100.0%** (12/12) | **+33.3%** |
+| **Budget Overshoot Rate** | High (frequently suggests items ₹1k–₹5k over budget) | **0.0%** (deterministic bounds enforced) | **-100%** |
 | **Missing Spec Hallucination** | Prone to assuming warranties or unstated features | **0.0%** (guarded by Stage 4 auditor) | **-100%** |
+
+👉 **Full Evaluation Report:** See [MILESTONE_2_REPORT.md](file:///Users/suryapratapsingh/aiml/promt_project/MILESTONE_2_REPORT.md) for the complete breakdown of all 12 test queries, expected vs. actual outputs, edge-case handling, and Pass/Fail results.
 
 ---
 
@@ -84,11 +86,13 @@ promt_project/
 ├── app.py                      # Interactive Streamlit Web Application
 ├── requirements.txt            # Python dependencies
 ├── README.md                   # Project overview & documentation
+├── MILESTONE_2_REPORT.md       # Milestone 2 evaluation report (12 test inputs & results)
 ├── PROJECT_PROPOSAL.md         # Submission answers for Q6–Q19 with KPMG citations
 ├── ELECTRAMATCH_PROJECT_OUTLINE.md # Complete project blueprint & research design
 ├── data/
-│   ├── products.csv            # 19 curated electronics across 5 categories
-│   └── test_queries.json       # Benchmark evaluation queries
+│   ├── products.csv            # 51 curated electronics across 8 categories
+│   ├── test_queries.json       # 12 benchmark evaluation queries (standard + edge)
+│   └── benchmark_results.md    # Formatted evaluation benchmark table
 └── src/
     ├── __init__.py
     ├── config.py               # Settings, environment, and GenAI client factory
