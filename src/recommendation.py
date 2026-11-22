@@ -187,15 +187,22 @@ class ElectraMatchOrchestrator:
         elif any(w in q_lower for w in ["refrigerator", "fridge", "freezer", "single door", "double door"]):
             cat = "refrigerator"
 
-        # Extract budget like 25k, 25000, 25,000
+        # Extract budget like 25k, 25000, 25,000, 1,20,000, 1.2L
         budget = None
-        budget_match = re.search(r'(?:under|below|budget|within|upto|up to|₹|rs\.?)\s*([0-9]+(?:,[0-9]+)?|\d+k)', q_lower)
+        budget_match = re.search(r'(?:under|below|budget(?:\s*of)?|within|upto|up to|₹|rs\.?)\s*([0-9,]+(?:\.\d+)?|\d+(?:\.\d+)?(?:k|lakh|l)?)\b', q_lower)
         if budget_match:
-            b_str = budget_match.group(1).replace(',', '')
-            if 'k' in b_str:
-                budget = float(b_str.replace('k', '')) * 1000
-            else:
-                budget = float(b_str)
+            b_str = budget_match.group(1).replace(',', '').strip().lower()
+            try:
+                if b_str.endswith('k'):
+                    budget = float(b_str[:-1]) * 1000
+                elif b_str.endswith('lakh'):
+                    budget = float(b_str[:-4]) * 100000
+                elif b_str.endswith('l'):
+                    budget = float(b_str[:-1]) * 100000
+                else:
+                    budget = float(b_str)
+            except ValueError:
+                budget = None
 
         return {
             "category": cat,

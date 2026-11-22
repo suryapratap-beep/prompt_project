@@ -1,74 +1,134 @@
 [
   {
     "query_id": "Q-01",
+    "test_type": "Standard Functional",
     "user_query": "Recommend a refrigerator under ₹25,000 for a small family of three. Prefer double door frost-free if possible.",
     "target_category": "refrigerator",
     "budget_max": 25000,
     "mandatory_constraints": ["price <= 25000", "category == refrigerator"],
     "preferences": ["double door", "frost-free", "suitable for 3 members"],
-    "expected_best_match": "REF-003"
+    "expected_best_match": "Samsung 236L 3-Star Digital Inverter Double Door (₹24,990)",
+    "expected_behavior": "Strictly satisfies budget <= ₹25k and returns double-door frost-free model."
   },
   {
     "query_id": "Q-02",
+    "test_type": "Standard Functional",
     "user_query": "I am a college student needing a lightweight laptop under ₹40,000 for programming, assignments and watching lectures.",
     "target_category": "laptop",
     "budget_max": 40000,
     "mandatory_constraints": ["price <= 40000", "category == laptop"],
     "preferences": ["lightweight", "SSD storage", "good battery life"],
-    "expected_best_match": "LAP-001"
+    "expected_best_match": "Lenovo IdeaPad Slim 3 (Core i3 / 8GB / 512GB SSD) (₹34,990)",
+    "expected_behavior": "Recommends fast SSD laptop under ₹40k suitable for student coursework."
   },
   {
     "query_id": "Q-03",
+    "test_type": "Standard Functional",
     "user_query": "Looking for a 1.5 Ton AC for a master bedroom under ₹38,000 with copper condenser and inverter compressor.",
     "target_category": "air_conditioner",
     "budget_max": 38000,
     "mandatory_constraints": ["price <= 38000", "category == air_conditioner", "copper condenser"],
     "preferences": ["1.5 Ton", "inverter tech"],
-    "expected_best_match": "AC-002"
+    "expected_best_match": "Daikin 1.5 Ton 3-Star Inverter Split AC (₹36,990)",
+    "expected_behavior": "Returns 1.5 Ton inverter model with copper condenser within ₹38k limit."
   },
   {
     "query_id": "Q-04",
+    "test_type": "Standard Functional",
     "user_query": "Need a fully automatic washing machine with minimum 7kg capacity under ₹20,000.",
     "target_category": "washing_machine",
     "budget_max": 20000,
     "mandatory_constraints": ["price <= 20000", "category == washing_machine", "capacity >= 7kg", "fully automatic"],
     "preferences": ["energy efficient", "inverter motor"],
-    "expected_best_match": "WM-002"
+    "expected_best_match": "LG 7 Kg 5-Star Smart Inverter Top Load (₹18,990)",
+    "expected_behavior": "Recommends fully automatic 7kg washer within ₹20k without exceeding budget."
   },
   {
     "query_id": "Q-05",
+    "test_type": "Standard Functional",
     "user_query": "I want a microwave that can bake cakes, make pizza, and grill chicken under ₹15,000.",
     "target_category": "microwave",
     "budget_max": 15000,
     "mandatory_constraints": ["price <= 15000", "category == microwave", "baking capability (convection)"],
     "preferences": ["grill", "tandoor / fermentation"],
-    "expected_best_match": "MIC-003"
+    "expected_best_match": "Samsung 28L Convection Microwave Oven (₹12,490)",
+    "expected_behavior": "Recommends true convection multi-mode microwave oven under ₹15k."
   },
   {
     "query_id": "Q-06",
+    "test_type": "Standard Functional",
     "user_query": "Suggest a 4K smart TV under ₹35,000 for living room movie streaming with good viewing angles.",
     "target_category": "television",
     "budget_max": 35000,
     "mandatory_constraints": ["price <= 35000", "category == television", "4K resolution"],
     "preferences": ["IPS panel", "smart TV OS"],
-    "expected_best_match": "TV-002"
+    "expected_best_match": "LG 43-inch 4K Ultra HD Smart LED TV (₹31,990)",
+    "expected_behavior": "Selects 4K smart TV within ₹35k budget with wide viewing angles."
   },
   {
     "query_id": "Q-07",
+    "test_type": "Standard Functional",
     "user_query": "I want premium noise canceling wireless headphones under ₹30,000 for flight travel and office focus.",
     "target_category": "audio",
     "budget_max": 30000,
     "mandatory_constraints": ["price <= 30000", "category == audio", "Active Noise Cancellation"],
     "preferences": ["long battery life", "Hi-Res audio"],
-    "expected_best_match": "AUD-002"
+    "expected_best_match": "Sony WH-1000XM5 Wireless ANC Headphones (₹26,990)",
+    "expected_behavior": "Selects top-tier active noise cancellation headphones under ₹30,000."
   },
   {
     "query_id": "Q-08",
+    "test_type": "Standard Functional",
     "user_query": "Looking for a smart robot vacuum cleaner and mop under ₹26,000 with LiDAR navigation.",
     "target_category": "smart_home",
     "budget_max": 26000,
     "mandatory_constraints": ["price <= 26000", "category == smart_home", "robot vacuum & mop"],
     "preferences": ["LiDAR navigation", "app mapping"],
-    "expected_best_match": "SMR-002"
+    "expected_best_match": "Ecovacs Deebot Y1 Pro 2-in-1 Robot Vacuum & Mop (₹24,900)",
+    "expected_behavior": "Matches smart cleaning robot with LiDAR mapping under ₹26k."
+  },
+  {
+    "query_id": "Q-09",
+    "test_type": "Edge Case: Impossible / Under-Budget",
+    "user_query": "Looking for an inverter double door frost-free refrigerator under ₹5,000.",
+    "target_category": "refrigerator",
+    "budget_max": 5000,
+    "mandatory_constraints": ["price <= 5000", "category == refrigerator"],
+    "preferences": ["double door", "frost-free", "inverter"],
+    "expected_best_match": "Fallback Notification / Closest Alternative with Budget Warning",
+    "expected_behavior": "No product exists under ₹5k; triggers budget relaxation warning without hallucinating fake ₹5,000 models."
+  },
+  {
+    "query_id": "Q-10",
+    "test_type": "Edge Case: Contradictory / Unrealistic Constraints",
+    "user_query": "Need a high-end dedicated GPU gaming laptop with RTX graphics and 18-hour battery life under ₹30,000.",
+    "target_category": "laptop",
+    "budget_max": 30000,
+    "mandatory_constraints": ["price <= 30000", "category == laptop"],
+    "preferences": ["RTX GPU", "18-hour battery"],
+    "expected_best_match": "Acer Aspire Lite (₹24,990) or Budget Warning",
+    "expected_behavior": "Enforces ₹30k budget limit; explains trade-off that dedicated RTX GPUs and 18hr battery cannot co-exist in this price tier."
+  },
+  {
+    "query_id": "Q-11",
+    "test_type": "Edge Case: Ultra-Premium Budget Upper-Bound",
+    "user_query": "I want the best 55-inch OLED TV with 120Hz refresh rate and HDMI 2.1 for PS5 gaming with an unlimited budget of ₹1,20,000.",
+    "target_category": "television",
+    "budget_max": 120000,
+    "mandatory_constraints": ["price <= 120000", "category == television", "OLED / 120Hz"],
+    "preferences": ["HDMI 2.1", "Dolby Vision"],
+    "expected_best_match": "LG 55-inch 4K OLED Cinema TV (₹99,990)",
+    "expected_behavior": "Matches premium 120Hz OLED TV, correctly honoring the generous budget ceiling."
+  },
+  {
+    "query_id": "Q-12",
+    "test_type": "Edge Case: Missing / Unspecified Budget with Strict Feature Requirements",
+    "user_query": "Recommend a quiet front load washing machine with steam wash and allergen care for sensitive skin.",
+    "target_category": "washing_machine",
+    "budget_max": null,
+    "mandatory_constraints": ["category == washing_machine", "type == Front Load", "steam wash"],
+    "preferences": ["quiet motor", "allergen care"],
+    "expected_best_match": "LG 7 Kg 5-Star Inverter Direct Drive Front Load (₹28,990)",
+    "expected_behavior": "Handles unspecified budget gracefully, ranks purely by feature alignment (steam wash + Direct Drive motor)."
   }
 ]
